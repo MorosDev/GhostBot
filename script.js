@@ -34,3 +34,17 @@ window.addEventListener("scroll", marcarActivo, { passive: true });
 marcarActivo();
 
 document.querySelector("#year").textContent = new Date().getFullYear();
+
+// Botones de copiar: cualquier botón con el atributo data-copiar copia ese texto.
+// Todavía no hay ninguno en la página; van a funcionar solos cuando se agreguen.
+document.querySelectorAll("[data-copiar]").forEach(boton => {
+  boton.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(boton.dataset.copiar);
+      boton.textContent = "Copiado";
+    } catch (error) {
+      boton.textContent = "No se pudo copiar";
+    }
+    setTimeout(() => { boton.textContent = "Copiar"; }, 1500);
+  });
+});
